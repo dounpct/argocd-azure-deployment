@@ -5,4 +5,4 @@ metadata:
   name: test-secret2
 type: Opaque
 stringData:
-  bitbucket-user: <path:azure-kv-01#key-jiw-test>
+  bitbucket-user: <path:jiw-test-key-vault#test-key>
