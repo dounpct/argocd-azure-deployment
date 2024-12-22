@@ -5,4 +5,5 @@ metadata:
   name: test-secret2
 type: Opaque
 stringData:
-  bitbucket-user: <path:jiw-test-key-vault#test-key>
+  test-key: <path:jiw-test-key-vault#test-key>
+  argo-pwd: <path:jiw-test-key-vault#argo-pwd>
