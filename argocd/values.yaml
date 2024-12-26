@@ -418,28 +418,28 @@ argo-cd:
     # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/config-management-plugins/
     cmp:
       # -- Create the argocd-cmp-cm configmap
-      create: false
+      create: true
 
       # -- Annotations to be added to argocd-cmp-cm configmap
       annotations: {}
 
       # -- Plugin yaml files to be added to argocd-cmp-cm
-      plugins: {}
+      plugins:
         # --- First plugin
-        # my-plugin:
-        #   init:
-        #     command: [sh]
-        #     args: [-c, 'echo "Initializing..."']
-        #   generate:
-        #     command: [sh, -c]
-        #     args:
-        #       - |
-        #         echo "{\"kind\": \"ConfigMap\", \"apiVersion\": \"v1\", \"metadata\": { \"name\": \"$ARGOCD_APP_NAME\", \"namespace\": \"$ARGOCD_APP_NAMESPACE\", \"annotations\": {\"Foo\": \"$ARGOCD_ENV_FOO\", \"KubeVersion\": \"$KUBE_VERSION\", \"KubeApiVersion\": \"$KUBE_API_VERSIONS\",\"Bar\": \"baz\"}}}"
-        #   discover:
-        #     fileName: "./subdir/s*.yaml"
-        #     find:
-        #       glob: "**/Chart.yaml"
-        #       command: [sh, -c, find . -name env.yaml]
+        plugin-helm:
+          init:
+            command: [sh]
+            args: [-c, 'echo "Initializing..."']
+          generate:
+            command: [sh, -c]
+            args:
+              - |
+                echo "{\"kind\": \"ConfigMap\", \"apiVersion\": \"v1\", \"metadata\": { \"name\": \"$ARGOCD_APP_NAME\", \"namespace\": \"$ARGOCD_APP_NAMESPACE\", \"annotations\": {\"Foo\": \"$ARGOCD_ENV_FOO\", \"KubeVersion\": \"$KUBE_VERSION\", \"KubeApiVersion\": \"$KUBE_API_VERSIONS\",\"Bar\": \"baz\"}}}"
+          discover:
+            fileName: "./subdir/s*.yaml"
+            find:
+              glob: "**/Chart.yaml"
+              command: [sh, -c, find . -name env.yaml]
 
         # --- Second plugin
         # my-plugin2:
@@ -2119,7 +2119,7 @@ argo-cd:
       # -- Server service labels
       labels: {}
       # -- Server service type
-      type: LoadBalancer
+      type: ClusterIP
       # -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
       nodePortHttp: 30080
       # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
