@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  repository: my-app
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP # Options: ClusterIP, NodePort, LoadBalancer, ExternalName
+  port: 80
+  targetPort: 8080
+  protocol: TCP
+  name: http
+
+env:
+  ENV_VAR1: "value1"
+  ENV_VAR2: "value2"
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+  requests:
+    cpu: "250m"
+    memory: "128Mi"
+
+nodeSelector: {}
+affinity: {}
+tolerations: []
