@@ -1,0 +1,45 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-test-azure-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: applications-deployment
+    repoURL: https://github.com/dounpct/argocd-azure-deployment.git
+    targetRevision: "master"
+    helm:
+      valueFiles:
+      - 'devops-test-azure/values-dev.yaml'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: devops-test-azure-dev
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-test-azure-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: applications-deployment
+    repoURL: https://github.com/dounpct/argocd-azure-deployment.git
+    targetRevision: "master"
+    helm:
+      valueFiles:
+      - 'devops-test-azure/values-prod.yaml'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: devops-test-azure-prod
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
+---
