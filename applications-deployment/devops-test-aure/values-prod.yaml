@@ -1,4 +1,4 @@
 nameOverride: "devosp-test-azure-prod"
 image:
   repository: "jiwtestacr.azurecr.io/devops-test-azure"
-  tag: "0.0.1"
+  tag: "0.0.2"
